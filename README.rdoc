@@ -24,8 +24,8 @@ Inspired by the EAN gem by Pascal Belloncle (nano RAILS)
 	'731346000101'.to_ean  ==> '0731346000101'
 	'731346000101'.to_gtin ==> '000731346000101'
 
-	'0731346000101'.valid_checksum? ==> true
-	'0731346000105'.valid_checksum? ==> false
+	'0731346000101'.gtin_valid_checksum? ==> true
+	'0731346000105'.gtin_valid_checksum? ==> false
 	
 	Also adds .odd? and .even? to the Integer class
 	
@@ -37,10 +37,15 @@ Inspired by the EAN gem by Pascal Belloncle (nano RAILS)
 
 	sudo gem install gtin
 
+== NOTES
+
+http://www.gs1.org/docs/gcp_length/GCPPrefixFormatList.xml
+
 == LICENSE:
 
 (The MIT License)
 
+Copyright (c) 2013 G. Allen Morris III
 Copyright (c) 2010 Hans C. Masing & Sensible Geek, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining
@@ -61,3 +66,4 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+

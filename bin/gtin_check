@@ -1,0 +1,87 @@
+#! /usr/bin/env ruby
+
+# == Synopsis
+#
+# Checks the validity of a  Global Trade Item Number
+#
+# == Usage
+#
+# check_gtin [options] <gtin>
+#
+# Various options:
+#        run "$ check_gtin --help" to see them
+#
+
+require 'ostruct'
+require 'optparse'
+require File.absolute_path(File.dirname(__FILE__) + '/../lib/gtin/string.rb')
+
+@options = OpenStruct.new
+
+name = 'check_gtin'
+from_file = nil
+
+opts = OptionParser.new do |opts|
+  opts.banner = "#{name} #{GTIN::VERSION}\n" +
+                "Usage: check_gtin [options] <gtin>"
+ 
+  opts.separator ""
+  opts.separator "Options:"
+
+  opts.on_tail("-h", "--help", "Show help message") do
+      puts opts
+      exit
+  end
+  
+  opts.on("--gcp", "Show Global Company Prefix (GCP)") do
+    @options.gcp = true
+  end
+
+  opts.on_tail("--version", "Show version #{GTIN::VERSION}") do
+      puts "#{name} " + GTIN::VERSION
+      exit
+  end
+  
+  opts.on("-v","Show version, set $VERBOSE to true, profile script if option given") do
+      puts "ruby version: " + [RUBY_PATCHLEVEL, RUBY_PLATFORM, RUBY_VERSION].join(' ')
+      $VERBOSE = true
+  end
+  
+  opts.on("-d", "Set $DEBUG to true") do
+    $DEBUG = true
+  end
+end
+
+begin
+  opts.parse! ARGV
+rescue OptionParser::InvalidOption,
+       OptionParser::InvalidArgument,
+       OptionParser::MissingArgument => e
+  puts opts
+  puts
+  puts e.message
+  exit(-1)
+end
+
+# Make sure the user specified at least one file
+if ARGV.length < 1 and not @options.exec
+  puts opts
+  puts ""
+  puts "Must specify a script to run"
+  exit(-1)
+end
+
+def check(gtin)
+  if @options.gcp
+    puts "gcp = #{ gtin.to_gtin(13).gcp }"
+  end
+  puts "#{gtin} is OK"
+end
+
+if from_file
+else
+  ARGV.each do |gtin|
+    check(gtin)
+  end
+end
+

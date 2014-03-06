@@ -1,26 +1,26 @@
-require 'rubygems'
-gem 'hoe', '>= 2.1.0'
-require 'hoe'
-require 'fileutils'
-require './lib/gtin'
+#!/usr/bin/ruby
 
-Hoe.plugin :newgem
-# Hoe.plugin :website
-# Hoe.plugin :cucumberfeatures
+#require "bundler/gem_tasks"
+require 'rake/testtask'
 
-# Generate all the Rake tasks
+ENV['YARDOC']=`which yardoc`
+
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
-$hoe = Hoe.spec 'gtin' do
-  self.developer 'FIXME full name', 'FIXME email'
-  self.post_install_message = 'PostInstall.txt' # TODO remove if post-install message not required
-  self.rubyforge_name       = self.name # TODO this is default value
-  # self.extra_deps         = [['activesupport','>= 2.0.2']]
 
+task :doc do |t|
+  if !File.exists?('.yardoc') || File.mtime('lib') > File.mtime('.yardoc')
+    puts "building docs"
+    `test -x $YARDOC && $YARDOC lib/ spec/`
+  end
 end
 
-require 'newgem/tasks'
-Dir['tasks/**/*.rake'].each { |t| load t }
+Rake::TestTask.new do |t|
+  t.libs << "test"
+  t.test_files = FileList['specs/spec_*.rb', 'test/*_test.rb']
+  t.verbose = true
+end
 
-# TODO - want other tests/tasks run by default? Add them to the list
-# remove_task :default
-# task :default => [:spec, :features]
+task :default => [] do |t|
+  puts "done"
+end
+

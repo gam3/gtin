@@ -1,11 +1,21 @@
+# -*- encoding: utf-8 -*-
+
+$:.unshift File.expand_path("./lib")
+require 'gtin'
+
 Gem::Specification.new do |s|
-  s.name = %q{gtin}
-  s.version = "0.1.2"
-  s.date = %q{2009-04-26}
-  s.authors = ["Hans Masing"]
-  s.email = %q{rubygems@dragonflydepot.com}
-  s.summary = %q{GTIN provides basic validation, checksum and conversion functionality for UPC, EAN and GTIN barcode values.}
-  s.homepage = %q{http://github.com/hmasing/gtin}
-  s.description = %q{GTIN provides basic validation, checksum and conversion functionality for UPC, EAN and GTIN barcode values.}
-  s.files = [ "History.txt", "lib/gtin.rb", "lib/gtin/gtin.rb", "lib/gtin/version.rb", "Manifest.txt", "Rakefile", "README.rdoc", "script/console", "script/destroy", "script/generate", "test/test_gtin.rb", "test/test_helper.rb" ]
+  s.name = "gtin"
+  s.version = GTIN::VERSION
+
+  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
+  s.authors = ["G. Allen Morris III"]
+  s.description = "The Fluential Class Tagger - This is the ruby version."
+  s.email = ["gam3@fluential.com"]
+  s.executables = ["gtin_check"]
+  s.files = [ 'lib/gtin.rb', 'lib/gtin/string.rb', 'bin/gtin_check' ]
+  s.homepage = "https://github.com/gam3/gtin"
+  s.require_paths = ["lib"]
+  s.rubyforge_project = "GTIN"
+  s.summary = "GTIN/UPC package"
 end
+
